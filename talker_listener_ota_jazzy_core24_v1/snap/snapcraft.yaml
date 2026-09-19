@@ -1,0 +1,30 @@
+name: roscon-toronto-ota-demo
+title: ROSCon Toronto OTA demo
+version: '1.0.0'
+summary: ROS 2 snap OTA demonstration
+description: A ROS 2 talker and listener used to demonstrate fleet updates.
+license: Apache-2.0
+contact: mailto:robotics@ubuntu.com
+grade: stable
+confinement: strict
+base: core24
+
+parts:
+  roscon-ota-demo:
+    plugin: colcon
+    source: .
+
+apps:
+  talker:
+    command: opt/ros/snap/lib/roscon_ota_demo/talker
+    daemon: simple
+    plugs: [network, network-bind]
+    extensions: [ros2-jazzy]
+    environment:
+      FASTDDS_BUILTIN_TRANSPORTS: UDPv4
+  listener:
+    command: opt/ros/snap/lib/roscon_ota_demo/listener
+    plugs: [network, network-bind]
+    extensions: [ros2-jazzy]
+    environment:
+      FASTDDS_BUILTIN_TRANSPORTS: UDPv4
